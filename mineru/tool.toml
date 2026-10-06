@@ -1,0 +1,67 @@
+[tool]
+description = "Convert a local PDF or office file (or a remote file URL) to markdown, latex, docx, or html via the MinerU parse API. Uploads the file, polls the parse task, downloads the result zip, and writes the requested formats to out_dir. Requires the MINERU_TOKEN env var."
+command = "mineru"
+args = []
+timeout_ms = 1800000
+
+[tool.schema]
+type = "object"
+
+[tool.schema.properties.file]
+type = "string"
+description = "Local file to parse (pdf, doc, docx, ppt, pptx, xls, xlsx, png, jpg, jpeg, jp2, webp, gif, bmp). Required unless url is given."
+
+[tool.schema.properties.url]
+type = "string"
+description = "Remote file URL to parse instead of uploading a local file."
+
+[tool.schema.properties.formats]
+type = "array"
+description = "Output formats to write: markdown, latex, docx, html. Default [\"markdown\"]."
+
+[tool.schema.properties.model_version]
+type = "string"
+description = "MinerU model: pipeline (default, reliable) or vlm (more accurate, may fail on some files). MinerU-HTML is only for html files."
+default = "pipeline"
+
+[tool.schema.properties.is_ocr]
+type = "boolean"
+description = "Enable OCR. Default false."
+default = false
+
+[tool.schema.properties.enable_formula]
+type = "boolean"
+description = "Enable formula recognition. Default true."
+default = true
+
+[tool.schema.properties.enable_table]
+type = "boolean"
+description = "Enable table recognition. Default true."
+default = true
+
+[tool.schema.properties.language]
+type = "string"
+description = "Document language hint for OCR (API default ch; use en for English documents)."
+
+[tool.schema.properties.page_ranges]
+type = "string"
+description = "Page range to parse, e.g. \"1-10\" or \"2,4-6\"."
+
+[tool.schema.properties.data_id]
+type = "string"
+description = "Optional client identifier for the parse object."
+
+[tool.schema.properties.out_dir]
+type = "string"
+description = "Directory for the written outputs. Default: the current working directory."
+default = "."
+
+[tool.schema.properties.timeout_s]
+type = "integer"
+description = "Max seconds to wait for the parse task. Default 900, cap 3600."
+default = 900
+
+[tool.schema.properties.keep_zip]
+type = "boolean"
+description = "Also write the raw result zip next to the outputs."
+default = false

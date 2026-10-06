@@ -1,0 +1,22 @@
+# The mineru rushi tool: convert a local file (or a remote URL) to
+# markdown / latex / docx / html via the MinerU parse API
+# (mineru.net/api/v4). One-shot binary; JSON object on stdin, one JSON
+# object on stdout, non-zero exit plus stderr on failure.
+#
+# Shells out to curl (HTTP, token kept in a header file) and unzip
+# (result archive). Both are looked up next to this binary first
+# (the ext flake bundles them there), then on PATH.
+
+[package]
+name = "mineru"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+
+[[bin]]
+name = "mineru"
+path = "src/main.rs"
+
+[dependencies]
+serde_json = "1.0"
