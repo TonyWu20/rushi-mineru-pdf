@@ -438,6 +438,8 @@ fn run(args: Value) -> Result<Value, String> {
     if !out_dir.is_absolute() {
         out_dir = env::current_dir().unwrap_or_else(|_| PathBuf::from(".")).join(out_dir);
     }
+    // Collapse "." and ".." components (lexical normalize).
+    out_dir = out_dir.components().collect();
     let timeout_s = args
         .get("timeout_s")
         .and_then(|v| v.as_u64())
